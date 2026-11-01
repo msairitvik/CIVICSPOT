@@ -1,0 +1,60 @@
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  application:
+    name: civicspot-backend
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:default}
+  datasource:
+    url: ${DB_URL:jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:civicspot}?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false
+  servlet:
+    multipart:
+      max-file-size: 15MB
+      max-request-size: 20MB
+
+civicspot:
+  jwt:
+    secret: ${JWT_SECRET:civicspot_jwt_super_secret_key_minimum_256_bits_length_secure_token_2026}
+    expiration-ms: 86400000 # 24 hours
+  gemini:
+    api-key: ${GEMINI_API_KEY:}
+    model: ${GEMINI_MODEL:gemini-3.8-flash}
+    fallback-model: gemini-2.5-flash
+    api-url: https://generativelanguage.googleapis.com/v1beta
+  external:
+    overpass-api-url: ${OVERPASS_API_URL:https://overpass-api.de/api/interpreter}
+    nominatim-api-url: ${NOMINATIM_API_URL:https://nominatim.openstreetmap.org}
+    osrm-api-url: ${OSRM_API_URL:https://router.project-osrm.org}
+  cors:
+    allowed-origins: ${FRONTEND_URL:http://localhost:5173},http://localhost:3000,http://127.0.0.1:5173
+
+---
+spring:
+  config:
+    activate:
+      on-profile: h2
+  datasource:
+    url: jdbc:h2:mem:civicspot;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console

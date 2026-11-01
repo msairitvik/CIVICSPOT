@@ -1,0 +1,20 @@
+package com.civicspot.model;
+
+public enum FacilityCategory {
+    PUBLIC_TOILET,
+    DRINKING_WATER,
+    DUSTBIN,
+    HOSPITAL,
+    PHARMACY,
+    POLICE_STATION,
+    BUS_STOP,
+    RAILWAY_STATION,
+    PUBLIC_PARK,
+    REST_AREA,
+    EV_CHARGING,
+    ACCESSIBLE_FACILITY,
+    PUBLIC_WIFI,
+    GOVT_CENTRE,
+    COMMUNITY_CENTRE,
+    OTHER
+}
